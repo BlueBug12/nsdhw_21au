@@ -11,7 +11,7 @@ $(TARGET): _matrix.cpp
 	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` $< -o _matrix`python3-config --extension-suffix` `python3-config --includes` -I${INCLUDE_DIRS} -L${MKL_LIB} -lpthread
 
 test: all
-	python3 -m pytest test.matrix.py
+	python3 -m pytest test_matrix.py
 
 .PHONY: clean
 clean:
