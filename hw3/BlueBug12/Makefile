@@ -3,7 +3,7 @@ CXXFLAGS := -O3 -Wall -shared -std=c++11 -fPIC
 TARGET = _matrix.*.so
 
 INCLUDE_DIRS = /usr/include/mkl
-MKL_LIB=/usr/lib/x86_64-linux-gnu -lbas
+MKL_LIB=/usr/lib/x86_64-linux-gnu -lblas
 
 all: $(TARGET)
 
