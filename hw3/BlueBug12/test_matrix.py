@@ -6,10 +6,6 @@ import pytest
 import _matrix
 
 class TestMatrix:
-    def __init__():
-        sefl.naive_time = 0.0
-        self.mkl_time = 0.0
-        self.tile_time = 0.0
     def multiplier(self,row,col1,col2,tsize):
         _1d_m1 = np.random.rand(row*col1)
         _1d_m2 = np.random.rand(col1*col2)
@@ -25,35 +21,36 @@ class TestMatrix:
         time_start = time.time()
         naive_ret = _matrix.multiply_naive(m1,m2)
         time_end = time.time()
-        self.naive_time = time_end - time_start
+        naive_time = time_end - time_start
 
         #MKL multiply
         time_start = time.time()
         naive_ret = _matrix.multiply_mkl(m1,m2)
         time_end = time.time()
-        self.mkl_time = time_end - time_start
+        mkl_time = time_end - time_start
        
         #tiling multipy
         time_start = time.time()
         naive_ret = _matrix.multiply_tile(m1,m2,tsize)
         time_end = time.time()
-        self.tile_time = time_end - time_start
+        tile_time = time_end - time_start
         
         for i in range(row):
             for j in range(col2):
                 assert np_ret[i][j] == pytest.approx(naive_ret[i,j],rel=1e-6)
                 assert np_ret[i][j] == pytest.approx(mkl_ret[i,j],rel=1e-6)
                 assert np_ret[i][j] == pytest.approx(tile_ret[i,j],rel=1e-6)
+        return naive_time,mkl_time,tile_time
 
         
-    def write_file(self,file_name):
+    def write_file(self,file_name,naive_t,mkl_t,tile_t):
         with open(file_name,'w') as f:
-            f.write('naive method takes '+str(self.naive_time) + "s\n")
-            f.write('MKL method takes '+str(self.mkl_time) + "s (x" + str(self.naive_time/self.mkl_time)+"\n")
-            f.write('tiling method takes '+str(self.tile_time) + "s (x" + str(self.naive_time/self.tile_time)+"\n")
+            f.write('naive method takes '+str(naive_t) + "s\n")
+            f.write('MKL method takes '+str(mkl_t) + "s (x" + str(naive_t/mkl_t)+"\n")
+            f.write('tiling method takes '+str(tile_t) + "s (x" + str(naive_t/tile_t)+"\n")
 
     def test_matrix(self):
-        multiplier(1024,1024,1024,8)
-        write_file("performance.txt")
+        n_t,m_t,t_t = multiplier(1024,1024,1024,8)
+        write_file("performance.txt",n_t,m_t,t_t)
 
 
