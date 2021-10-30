@@ -7,7 +7,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include "mkl.h"
-struct Matrix {
+class Matrix {
 
 public:
 
@@ -291,6 +291,7 @@ PYBIND11_MODULE(_matrix,m){
 	pybind11::class_<Matrix>(m,"Matrix")
 		.def(pybind11::init<const size_t, const size_t>())
 		.def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
+        .def(pybind11::self == pybind11::self)
         .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
 		.def_property_readonly("nrow",&Matrix::nrow)
