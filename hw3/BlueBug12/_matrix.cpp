@@ -288,7 +288,7 @@ PYBIND11_MODULE(_matrix,m){
 	m.def("multiply_mkl",&multiply_mkl);
 	pybind11::class_<Matrix>(m,"Matrix")
 		.def(pybind11::init<const size_t, const size_t>())
-		.def(pybind11::init<const size_t, const size_t, std::vector<double> const & >)
+		.def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
         .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
 		.def_property_readonly("nrow",&Matrix::nrow)
