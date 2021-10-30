@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <functional>
+#include <pybind11/pybind11.h>
 #include "mkl.h"
 struct Matrix {
 
