@@ -10,7 +10,7 @@ class TestMatrix:
         _1d_m1 = np.random.rand(row*col1)
         _1d_m2 = np.random.rand(col1*col2)
         
-        _2d_m1 = _1d_m1.reshape(row,col)
+        _2d_m1 = _1d_m1.reshape(row,col1)
         _2d_m2 = _1d_m2.reshape(col1,col2)
         np_ret = np.matmul(_2d_m1,_2d_m2)
         
