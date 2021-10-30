@@ -27,13 +27,13 @@ class TestMatrix:
 
         #MKL multiply
         time_start = time.time()
-        naive_ret = _matrix.multiply_mkl(m1,m2)
+        mkl_ret = _matrix.multiply_mkl(m1,m2)
         time_end = time.time()
         mkl_time = time_end - time_start
        
         #tiling multipy
         time_start = time.time()
-        naive_ret = _matrix.multiply_tile(m1,m2,tsize)
+        tile_ret = _matrix.multiply_tile(m1,m2,tsize)
         time_end = time.time()
         tile_time = time_end - time_start
         
