@@ -277,6 +277,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
             }
         }
     }
+    return ret;
 }
 
 PYBIND11_MODULE(_matrix,m){
@@ -290,7 +291,7 @@ PYBIND11_MODULE(_matrix,m){
         .def("__getitem__",[](const Matrix & m,array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, array<int,2>index,double value){m(index[0],index[1])=value;})
 		.def_property_readonly("nrow",&Matrix::nrow)
-        .def_property_readonly("ncol",&Matrix::nrow)
+        .def_property_readonly("ncol",&Matrix::nrow);
 		
 }
 
