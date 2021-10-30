@@ -10,6 +10,9 @@ all: $(TARGET)
 $(TARGET): _matrix.cpp
 	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` $< -o _matrix`python3-config --extension-suffix` `python3-config --includes` -I${INCLUDE_DIRS} ${MKL_LIB} -lpthread
 
+test: all
+	python3 -m pytest test.matrix.py
+
 .PHONY: clean
 clean:
 	rm -rf *.o *.so __pycache__
