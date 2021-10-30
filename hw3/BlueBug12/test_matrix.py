@@ -37,9 +37,9 @@ class TestMatrix:
         
         for i in range(row):
             for j in range(col2):
-                assert np_ret[i][j] == pytest.approx(naive_ret[i,j],rel=1e-6)
-                assert np_ret[i][j] == pytest.approx(mkl_ret[i,j],rel=1e-6)
-                #assert np_ret[i][j] == pytest.approx(tile_ret[i,j],rel=1e-6)
+                assert np_ret[i][j] == pytest.approx(naive_ret[i,j])
+                assert np_ret[i][j] == pytest.approx(mkl_ret[i,j])
+                #assert np_ret[i][j] == pytest.approx(tile_ret[i,j])
         return naive_time,mkl_time,tile_time
 
         
