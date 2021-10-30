@@ -283,7 +283,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
                         const size_t t2_row = t_j+j;
                         double partial_sum = 0;
                         for(size_t t_k=0;t_k<tsize && k+t_k<ncol;++t_k){//move right in both tile
-                            partial_sum+=mat1(t1_row,t_k+k),mat2_t(t2_row,t_k+k);                    
+                            partial_sum+= mat1(t1_row,t_k+k)*mat2_t(t2_row,t_k+k);                    
                        }
                        ret(t1_row,t_j+j)+=partial_sum; 
                     }
