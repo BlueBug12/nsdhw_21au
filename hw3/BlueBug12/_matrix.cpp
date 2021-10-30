@@ -162,17 +162,14 @@ bool operator== (Matrix const & mat1, Matrix const & mat2)
 }
 
 bool Matrix::operator==(const Matrix &other) {
-  if (m_nrow != other.m_nrow || m_ncol != other.m_ncol) {
-    return false;
-  }
-  for (size_t i = 0; i < m_nrow; ++i) {
-    for (size_t j = 0; j < m_ncol; ++j) {
-      if ((*this)(i, j) != other(i, j)) {
+    if (m_nrow != other.m_nrow || m_ncol != other.m_ncol) 
         return false;
-      }
-    }
-  }
-  return true;
+    
+    for (size_t i = 0; i < m_nrow; ++i) 
+        for (size_t j = 0; j < m_ncol; ++j) 
+            if ((*this)(i, j) != other(i, j)) 
+                return false;
+    return true;
 }
 /*
  * Throw an exception if the shapes of the two matrices don't support
@@ -284,7 +281,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
                     const size_t t1_row = t_i+i;
                     for(size_t t_j=0;t_j<tsize && j+t_j<nrow2;++t_j){//mat2 move down in tile
                         const size_t t2_row = t_j+j;
-                        int partial_sum = 0;
+                        double partial_sum = 0;
                         for(size_t t_k=0;t_k<tsize && k+t_k<ncol;++t_k){//move right in both tile
                             partial_sum+=mat1(t1_row,t_k+k),mat2_t(t2_row,t_k+k);                    
                        }
