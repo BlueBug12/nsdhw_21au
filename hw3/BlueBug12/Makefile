@@ -18,7 +18,7 @@ SOFILE = _matrix${shell python3-config --extension-suffix}
 .PHONY: all
 all: ${SOFILE}
 
-${SOFILE}: matrix.cpp
+${SOFILE}: _matrix.cpp
 	${CXX} ${FPIC} $< -o $@ ${CXXFLAGS}
 
 test: ${SOFILE}
