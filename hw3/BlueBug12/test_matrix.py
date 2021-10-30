@@ -11,15 +11,15 @@ class TestMatrix:
         self.mkl_time = 0.0
         self.tile_time = 0.0
     def multiplier(self,row,col1,col2,tsize):
-        1d_m1 = np.random.rand(row*col1)
-        1d_m2 = np.random.rand(col1*col2)
+        _1d_m1 = np.random.rand(row*col1)
+        _1d_m2 = np.random.rand(col1*col2)
         
-        2d_m1 = 1d_m1.reshape(row,col)
-        2d_m2 = 1d_m2.reshape(col1,col2)
-        np_ret = np.matmul(2d_m1,2d_m2)
+        _2d_m1 = _1d_m1.reshape(row,col)
+        _2d_m2 = _1d_m2.reshape(col1,col2)
+        np_ret = np.matmul(_2d_m1,_2d_m2)
         
-        m1 = _matrix.Matrix(1d_m1)
-        m2 = _matrix.Matrix(1d_m2)
+        m1 = _matrix.Matrix(_1d_m1)
+        m2 = _matrix.Matrix(_1d_m2)
         
         #naive multiply
         time_start = time.time()
