@@ -1,28 +1,18 @@
-CXX = g++
+CXX := g++
+CXXFLAGS := -O3 -Wall -shared -std=c++11 -fPIC
+TARGET = _matrix.*.so
 
 INCLUDE_DIRS = /usr/include/mkl
-MKL_DIR = /usr/lib/x86_64-linux-gnu
+MKL_LIB=/usr/lib/x86_64-linux-gnu -lbas
 
-MKLFLAGS = ${MKL_DIR}/libmkl_def.so \
-	${MKL_DIR}/libmkl_avx2.so \
-	${MKL_DIR}/libmkl_core.so \
-	${MKL_DIR}/libmkl_intel_lp64.so \
-	${MKL_DIR}/libmkl_sequential.so
+all: $(TARGET)
 
-FPIC = `python3 -m pybind11 --includes`
-INCLUDE = `python3-config --includes`
-CXXFLAGS = -O3 -Wl,--no-as-needed -shared -std=c++11 -fPIC -I${INCLUDE_DIRS} ${MKLFLAGS} -ldl -lpthread -lm $(INCLUDE)
+$(TARGET): _matrix.cpp
+	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` $< -o _matrix`python3-config --extension-suffix` `python3-config --includes` -I${INCLUDE_DIRS} ${MKL_LIB} -lpthread
 
-SOFILE = _matrix${shell python3-config --extension-suffix}
+test: all
+	python3 -m pytest test.matrix.py
 
-.PHONY: all
-all: ${SOFILE}
-
-${SOFILE}: _matrix.cpp
-	${CXX} ${FPIC} $< -o $@ ${CXXFLAGS}
-
-test: ${SOFILE}
-	python -m pytest test_matrix.py
-
+.PHONY: clean
 clean:
-	rm -rf *.so __pycache__ .pytest_cache performance.txt
+	rm -rf *.o *.so __pycache__
