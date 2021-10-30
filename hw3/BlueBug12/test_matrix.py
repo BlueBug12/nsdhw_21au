@@ -14,8 +14,10 @@ class TestMatrix:
         _2d_m2 = _1d_m2.reshape(col1,col2)
         np_ret = np.matmul(_2d_m1,_2d_m2)
         
-        m1 = _matrix.Matrix(_1d_m1)
-        m2 = _matrix.Matrix(_1d_m2)
+        #m1 = _matrix.Matrix(_1d_m1)
+        #m2 = _matrix.Matrix(_1d_m2)
+        m1 = _matrix.Matrix(_2d_m1)
+        m2 = _matrix.Matrix(_2d_m2)
         
         #naive multiply
         time_start = time.time()
