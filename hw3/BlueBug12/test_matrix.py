@@ -50,7 +50,7 @@ class TestMatrix:
         with open(file_name,'w') as f:
             f.write('naive method takes '+str(self.naive_time) + "s\n")
             f.write('MKL method takes '+str(self.mkl_time) + "s (x" + str(self.naive_time/self.mkl_time)+"\n")
-            f.write('tiling method takes '+str(self.tile_time) + "s (x" + str(self.naive_time/self.tile_time)+"\n)
+            f.write('tiling method takes '+str(self.tile_time) + "s (x" + str(self.naive_time/self.tile_time)+"\n")
 
     def test_matrix(self):
         multiplier(1024,1024,1024,8)
