@@ -42,7 +42,7 @@ class TestMatrix:
             for j in range(col2):
                 assert np_ret[i][j] == pytest.approx(naive_ret[i,j],rel = 1e-6)
                 assert np_ret[i][j] == pytest.approx(mkl_ret[i,j],rel = 1e-6)
-                for l in range(len(tsize_list)):
+                for k in range(len(tsize_list)):
                     assert np_ret[i][j] == pytest.approx(tile_ret[k][i,j],rel = 1e-6)
         return naive_time,mkl_time,tile_time
 
