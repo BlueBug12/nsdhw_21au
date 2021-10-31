@@ -34,16 +34,16 @@ class TestMatrix:
         tile_ret = []
         for i in range(len(tsize_list)):
 	        time_start = time.time()
-    	    tile_ret.append(_matrix.multiply_tile(m1,m2,tsize_list[i]))
-			time_end = time.time()
-			tile_time.append(time_end - time_start)
+            tile_ret.append(_matrix.multiply_tile(m1,m2,tsize_list[i]))
+            time_end = time.time()
+            tile_time.append(time_end - time_start)
         
         for i in range(row):
             for j in range(col2):
                 assert np_ret[i][j] == pytest.approx(naive_ret[i,j],rel = 1e-6)
                 assert np_ret[i][j] == pytest.approx(mkl_ret[i,j],rel = 1e-6)
-				for l in rnage(len(tsize_list)):
-	                assert np_ret[i][j] == pytest.approx(tile_ret[k][i,j],rel = 1e-6)
+                for l in rnage(len(tsize_list)):
+                    assert np_ret[i][j] == pytest.approx(tile_ret[k][i,j],rel = 1e-6)
         return naive_time,mkl_time,tile_time
 
         
