@@ -277,7 +277,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
     for(size_t i=0;i<nrow1;i+=tsize){//mat1 jump to lower tile
         for(size_t j=0;j<nrow2;j+=tsize){//mat2 jump to lower tile
             for(size_t k=0;k<ncol;k+=tsize){//jump to right tile for both
-                for(size_t t_i=0;t_i<tsize && i+t_i<nrow1;++i){//mat1 move down in tile
+                for(size_t t_i=0;t_i<tsize && i+t_i<nrow1;++t_i){//mat1 move down in tile
                     const size_t t1_row = t_i+i;
                     for(size_t t_j=0;t_j<tsize && j+t_j<nrow2;++t_j){//mat2 move down in tile
                         const size_t t2_row = t_j+j;
@@ -285,7 +285,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
                         for(size_t t_k=0;t_k<tsize && k+t_k<ncol;++t_k){//move right in both tile
                             partial_sum+= mat1(t1_row,t_k+k)*mat2_t(t2_row,t_k+k);                    
                        }
-                       ret(t1_row,t_j+j)+=partial_sum; 
+                       ret(t1_row,t2_row)+=partial_sum; 
                     }
                 }
             }
