@@ -50,9 +50,9 @@ class TestMatrix:
             f.write('tiling method takes '+str(tile_t) + "s (x" + str(naive_t/tile_t)+"\n")
 
     def test_matrix(self):
-        n_t,m_t,t_t = self.multiplier(1000,1000,1000,32)
-        n_t,m_t,t_t = self.multiplier(1000,1000,1000,64)
-        n_t,m_t,t_t = self.multiplier(1000,1000,1000,128)
+        n_t,m_t,t_t = self.multiplier(1000,1000,1000,4)
+        n_t,m_t,t_t = self.multiplier(1000,1000,1000,8)
+        n_t,m_t,t_t = self.multiplier(1000,1000,1000,16)
         self.write_file("performance.txt",n_t,m_t,t_t)
 
 

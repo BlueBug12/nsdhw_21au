@@ -256,13 +256,12 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 
 
 
-Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize_byte){
+Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
 
     validate_multiplication(mat1, mat2);
     Matrix ret(mat1.nrow(), mat2.ncol());
 	Matrix mat2_t = std::move(mat2.transpose());
     
-    const size_t tsize = tsize_byte/sizeof(double);
     const size_t nrow1 = mat1.nrow();
     const size_t nrow2 = mat2_t.nrow();
     const size_t ncol  = mat1.ncol();    
