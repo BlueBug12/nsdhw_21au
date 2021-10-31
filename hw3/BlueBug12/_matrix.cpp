@@ -183,13 +183,6 @@ void validate_multiplication(Matrix const & mat1, Matrix const & mat2)
     }
 }
 
-/*
- * Get the number of floating-point operations.
- */
-size_t calc_nflo(Matrix const & mat1, Matrix const & mat2)
-{
-    return mat1.nrow() * mat1.ncol() * mat2.ncol();
-}
 
 /*
  * Use MKL for the matrix matrix multiplication.
@@ -263,11 +256,13 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 
 
 
-Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
+Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize_byte){
+
     validate_multiplication(mat1, mat2);
     Matrix ret(mat1.nrow(), mat2.ncol());
 	Matrix mat2_t = std::move(mat2.transpose());
     
+    const size_t tsize = tsize_byte/sizeof(double);
     const size_t nrow1 = mat1.nrow();
     const size_t nrow2 = mat2_t.nrow();
     const size_t ncol  = mat1.ncol();    

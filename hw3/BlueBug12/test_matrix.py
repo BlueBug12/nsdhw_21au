@@ -37,9 +37,9 @@ class TestMatrix:
         
         for i in range(row):
             for j in range(col2):
-                assert np_ret[i][j] == pytest.approx(naive_ret[i,j])
-                assert np_ret[i][j] == pytest.approx(mkl_ret[i,j])
-                #assert np_ret[i][j] == pytest.approx(tile_ret[i,j])
+                assert np_ret[i][j] == pytest.approx(naive_ret[i,j],rel = 1e-6)
+                assert np_ret[i][j] == pytest.approx(mkl_ret[i,j],rel = 1e-6)
+                assert np_ret[i][j] == pytest.approx(tile_ret[i,j],rel = 1e-6)
         return naive_time,mkl_time,tile_time
 
         
@@ -50,7 +50,9 @@ class TestMatrix:
             f.write('tiling method takes '+str(tile_t) + "s (x" + str(naive_t/tile_t)+"\n")
 
     def test_matrix(self):
-        n_t,m_t,t_t = self.multiplier(1000,1000,1000,2)
+        n_t,m_t,t_t = self.multiplier(1000,1000,1000,32)
+        n_t,m_t,t_t = self.multiplier(1000,1000,1000,64)
+        n_t,m_t,t_t = self.multiplier(1000,1000,1000,128)
         self.write_file("performance.txt",n_t,m_t,t_t)
 
 
