@@ -33,7 +33,7 @@ class TestMatrix:
         tile_time = []
         tile_ret = []
         for i in range(len(tsize_list)):
-	        time_start = time.time()
+            time_start = time.time()
             tile_ret.append(_matrix.multiply_tile(m1,m2,tsize_list[i]))
             time_end = time.time()
             tile_time.append(time_end - time_start)
@@ -51,13 +51,13 @@ class TestMatrix:
         with open(file_name,'w') as f:
             f.write("|"+"method".center(16,"-")+"|"+"time(s)".center(16,"-")+"|"+"speedup rate".center(16,"-")+"|\n")
             f.write("|"+'naive'.center(16)+"|"+str(round(naive_t,2)).center(16) +"|"+"1".center(16)+"|\n")
-			f.write("|"+"mkl".center(16)+"|"+str(round(mkl_t,2)).center(16)+"|"+str(round(naive_t/mkl_t,2)).center(16)+"|\n")
+            f.write("|"+"mkl".center(16)+"|"+str(round(mkl_t,2)).center(16)+"|"+str(round(naive_t/mkl_t,2)).center(16)+"|\n")
             for i in range(len(tile_size)):
                 s = 'tiling('+str(tile_size[i])+"x"+str(tile_size[i])+")"
                 f.write("|"+s.center(16)+"|"+str(round(tile_t[i],2)).center(16) + "|" + str(round(naive_t/tile_t[i],2)).center(16)+"|\n")
 
     def test_matrix(self):
-		tile_size = [2,4,8,16,32]
+        tile_size = [2,4,8,16,32]
         n_t,m_t,t_t = self.multiplier(1000,1000,1000,tile_size)
         self.write_file("performance.txt",n_t,m_t,t_t,tile_size)
 
