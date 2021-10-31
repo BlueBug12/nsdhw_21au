@@ -125,10 +125,8 @@ public:
     {
         if (m_buffer) { delete[] m_buffer; }
         const size_t nelement = nrow * ncol;
-        if (nelement) { m_buffer = new double[nelement]; }
+        if (nelement) { m_buffer = new double[nelement](); }
         else          { m_buffer = nullptr; }
-        for (size_t i = 0; i < nelement; ++i)
-            m_buffer[i] = 0;
         m_nrow = nrow;
         m_ncol = ncol;
     }
