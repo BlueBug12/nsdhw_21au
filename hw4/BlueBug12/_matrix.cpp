@@ -1,5 +1,5 @@
 #include <iostream>
-#include <sstream>
+#include <atomic>
 #include <iomanip>
 #include <vector>
 #include <stdexcept>
@@ -97,17 +97,17 @@ private:
 }; /* end class ByteCounter */
 
 template <class T>
-struct MyAllocator
+struct CustomAllocator
 {
 
     using value_type = T;
 
     // Just use the default constructor of ByteCounter for the data member
     // "counter".
-    MyAllocator() = default;
+    CustomAllocator() = default;
 
     template <class U> constexpr
-    MyAllocator(const MyAllocator<U> & other) noexcept
+    CustomAllocator(const CustomAllocator<U> & other) noexcept
     {
         counter = other.counter;
     }
@@ -141,9 +141,9 @@ struct MyAllocator
 
     ByteCounter counter;
 
-}; /* end struct MyAllocator */
+}; /* end struct CustomAllocator */
 
-CustomAllocator<double>alloc;
+static CustomAllocator<double>alloc;
 
 class Matrix {
 
@@ -270,7 +270,7 @@ public:
     size_t m_nrow = 0;
     size_t m_ncol = 0;
     //double * m_buffer = nullptr;
-    std::vector<double,CustomAllocator<double>>m_buffer;
+    std::vector<double,CustomAllocator<double>>m_buffer(alloc);
 
 };
 
@@ -338,12 +338,12 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
       , mat2.ncol() /* const MKL_INT n */
       , mat1.ncol() /* const MKL_INT k */
       , 1.0 /* const double alpha */
-      , mat1.m_buffer /* const double *a */
+      , mat1.m_buffer.data() /* const double *a */
       , mat1.ncol() /* const MKL_INT lda */
-      , mat2.m_buffer /* const double *b */
+      , mat2.m_buffer.data() /* const double *b */
       , mat2.ncol() /* const MKL_INT ldb */
       , 0.0 /* const double beta */
-      , ret.m_buffer /* double * c */
+      , ret.m_buffer.data() /* double * c */
       , ret.ncol() /* const MKL_INT ldc */
     );
 
