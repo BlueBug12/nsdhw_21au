@@ -251,6 +251,7 @@ public:
     //std::vector<double> buffer_vector() const { return std::vector<double>(m_buffer, m_buffer+size()); }
 
     Matrix transpose() const;
+    std::vector<double,CustomAllocator<double>>m_buffer;
 
 private:
 
@@ -270,7 +271,6 @@ private:
     size_t m_nrow = 0;
     size_t m_ncol = 0;
     //double * m_buffer = nullptr;
-    std::vector<double,CustomAllocator<double>>m_buffer;
 
 };
 

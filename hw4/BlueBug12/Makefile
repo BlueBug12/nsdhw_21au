@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -O3 -Wall -shared -std=c++11 -fPIC
+CXXFLAGS := -O3 -Wall -shared -std=c++17 -fPIC
 TARGET = _matrix.*.so
 
 INCLUDE_DIRS = /usr/include/mkl
