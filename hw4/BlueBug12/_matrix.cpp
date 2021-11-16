@@ -43,6 +43,7 @@ public:
         {
             decref();
             m_impl = other.m_impl;
+            incref();
         }
 
         return *this;
