@@ -150,13 +150,13 @@ class Matrix {
 public:
 
     Matrix(size_t nrow, size_t ncol)
-      : m_nrow(nrow), m_ncol(ncol)
+      : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
     {
         reset_buffer(nrow, ncol);
     }
 
     Matrix(size_t nrow, size_t ncol, std::vector<double> const & vec)
-      : m_nrow(nrow), m_ncol(ncol)
+      : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
     {
         reset_buffer(nrow, ncol);
         (*this) = vec;
@@ -252,7 +252,7 @@ public:
 
     Matrix transpose() const;
 
-public:
+private:
 
     size_t index(size_t row, size_t col) const
     {
@@ -270,7 +270,7 @@ public:
     size_t m_nrow = 0;
     size_t m_ncol = 0;
     //double * m_buffer = nullptr;
-    std::vector<double,CustomAllocator<double>>m_buffer(alloc);
+    std::vector<double,CustomAllocator<double>>m_buffer;
 
 };
 
