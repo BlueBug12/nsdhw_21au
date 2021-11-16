@@ -106,7 +106,7 @@ struct CustomAllocator
     // "counter".
     CustomAllocator() = default;
 
-    template <class U> constexpr
+    template <class U>
     constexpr CustomAllocator(const CustomAllocator<U> & other) noexcept
     {
         counter = other.counter;
