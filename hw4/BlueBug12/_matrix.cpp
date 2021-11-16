@@ -35,7 +35,7 @@ public:
         return *this;
     }
 
-    ByteCounter(ByteCounter && other): m_impl(other.m_impl){ other.decref(); }
+    ByteCounter(ByteCounter && other): m_impl(other.m_impl){ inref(); }
 
     ByteCounter & operator=(ByteCounter && other)
     {
