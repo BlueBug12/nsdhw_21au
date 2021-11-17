@@ -209,6 +209,51 @@ bool operator== (Matrix const & mat1, Matrix const & mat2)
     return true;
 }
 
+Matrix Matrix::transpose() const
+{
+    Matrix ret(nrow(), ncol());
+
+    for (size_t i=0; i<ret.nrow(); ++i)
+    {
+        for (size_t j=0; j<ret.ncol(); ++j)
+        {
+            ret(j, i) = (*this)(i, j);
+        }
+    }
+
+    return ret;
+}
+
+Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
+
+    validate_multiplication(mat1, mat2);
+    Matrix ret(mat1.nrow(), mat2.ncol());
+    Matrix mat2_t = std::move(mat2.transpose());
+
+    const size_t nrow1 = mat1.nrow();
+    const size_t nrow2 = mat2_t.nrow();
+    const size_t ncol  = mat1.ncol();    
+
+    for(size_t i=0;i<nrow1;i+=tsize){//mat1 jump to lower tile
+        for(size_t j=0;j<nrow2;j+=tsize){//mat2 jump to lower tile
+            for(size_t k=0;k<ncol;k+=tsize){//jump to right tile for both
+                for(size_t t_i=0;t_i<tsize && i+t_i<nrow1;++t_i){//mat1 move down in tile
+                    const size_t t1_row = t_i+i;
+                    for(size_t t_j=0;t_j<tsize && j+t_j<nrow2;++t_j){//mat2 move down in tile
+                        const size_t t2_row = t_j+j;
+                        double partial_sum = 0;
+                        for(size_t t_k=0;t_k<tsize && k+t_k<ncol;++t_k){//move right in both tile
+                            partial_sum+= mat1(t1_row,t_k+k)*mat2_t(t2_row,t_k+k);                    
+                       }
+                       ret(t1_row,t2_row)+=partial_sum; 
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 
 
 /*
@@ -274,7 +319,7 @@ size_t deallocated() { return alloc.counter.deallocated(); }
 
 PYBIND11_MODULE(_matrix,m){
     m.def("multiply_naive", &multiply_naive);
-    //m.def("multiply_tile", &multiply_tile);
+    m.def("multiply_tile", &multiply_tile);
     m.def("multiply_mkl", &multiply_mkl);
     m.def("bytes", &bytes);
     m.def("allocated", &allocated);
@@ -284,12 +329,8 @@ PYBIND11_MODULE(_matrix,m){
         //.def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
         //.def("__eq__", &Matrix::operator==)
         .def("__eq__", &operator==)
-        .def("__setitem__", [](Matrix &self, std::pair<size_t, size_t> i, double val) {
-                            self(i.first, i.second) = val;
-                                    })
-        .def("__getitem__", [](Matrix &self, std::pair<size_t, size_t> i) {
-                            return self(i.first, i.second);
-                                    })
+        .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
+        .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
         //.def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         //.def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
         .def_property_readonly("nrow",&Matrix::nrow)
