@@ -35,7 +35,7 @@ public:
         return *this;
     }
 
-    ByteCounter(ByteCounter && other): m_impl(other.m_impl){ incref(); }
+    ByteCounter(ByteCounter && other): m_impl(other.m_impl){ other.decref(); }
 
     ByteCounter & operator=(ByteCounter && other)
     {
@@ -43,7 +43,6 @@ public:
         {
             decref();
             m_impl = other.m_impl;
-            incref();
         }
 
         return *this;
@@ -217,8 +216,6 @@ public:
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
     {
         reset_buffer(0, 0);
-        std::swap(m_nrow, other.m_nrow);
-        std::swap(m_ncol, other.m_ncol);
         std::swap(m_buffer, other.m_buffer);
     }
 
