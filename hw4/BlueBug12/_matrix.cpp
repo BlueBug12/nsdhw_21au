@@ -10,28 +10,18 @@
 struct ByteCounterImpl
 {
 
-    std::atomic_size_t allocated = {0};
-    std::atomic_size_t deallocated = {0};
-    std::atomic_size_t refcount = {0};
+    std::atomic_size_t allocated{0};
+    std::atomic_size_t deallocated{0};
+    std::atomic_size_t refcount{0};
 
 }; /* end struct ByteCounterImpl */
 
-/**
- * One instance of this counter is shared among a set of allocators.
- *
- * The counter keeps track of the bytes allocated and deallocated, and report
- * those two numbers in addition to bytes that remain allocated.
- */
 class ByteCounter
 {
 public:
-    ByteCounter()
-      : m_impl(new ByteCounterImpl)
-    { incref(); }
+    ByteCounter(): m_impl(new ByteCounterImpl){ incref(); }
 
-    ByteCounter(ByteCounter const & other)
-      : m_impl(other.m_impl)
-    { incref(); }
+    ByteCounter(ByteCounter const & other): m_impl(other.m_impl){ incref(); }
 
     ByteCounter & operator=(ByteCounter const & other)
     {
@@ -41,13 +31,10 @@ public:
             m_impl = other.m_impl;
             incref();
         }
-
         return *this;
     }
 
-    ByteCounter(ByteCounter && other)
-      : m_impl(other.m_impl)
-    { other.incref(); }
+    ByteCounter(ByteCounter && other): m_impl(other.m_impl){ other.incref(); }
 
     ByteCounter & operator=(ByteCounter && other)
     {
@@ -91,7 +78,7 @@ private:
     {
         if (nullptr == m_impl)
         {
-            return;// Do nothing.
+            // Do nothing.
         }
         else if (1 == m_impl->refcount)
         {
@@ -106,7 +93,7 @@ private:
 
     ByteCounterImpl * m_impl;
 
-}; 
+}; /* end class ByteCounter */
 
 template <class T>
 struct CustomAllocator
@@ -118,19 +105,20 @@ struct CustomAllocator
     // "counter".
     CustomAllocator() = default;
 
-    template <class U>
-    constexpr CustomAllocator(const CustomAllocator<U> &other) noexcept : counter(other.counter)
+    template <class U> constexpr
+    CustomAllocator(const CustomAllocator<U> & other) noexcept
     {
+        counter = other.counter;
     }
 
-    T *allocate(std::size_t n)
+    T * allocate(std::size_t n)
     {
         if (n > std::numeric_limits<std::size_t>::max() / sizeof(T))
         {
             throw std::bad_alloc();
         }
-        const std::size_t bytes = n * sizeof(T);
-        T *p = static_cast<T *>(std::malloc(bytes));
+        const std::size_t bytes = n*sizeof(T);
+        T * p = static_cast<T *>(std::malloc(bytes));
         if (p)
         {
             counter.increase(bytes);
@@ -142,20 +130,17 @@ struct CustomAllocator
         }
     }
 
-    void deallocate(T *p, std::size_t n) noexcept
+    void deallocate(T* p, std::size_t n) noexcept
     {
         std::free(p);
 
-        const std::size_t bytes = n * sizeof(T);
+        const std::size_t bytes = n*sizeof(T);
         counter.decrease(bytes);
     }
-    std::size_t bytes() const { return counter.bytes(); }
-    std::size_t allocated() const { return counter.allocated(); }
-    std::size_t deallocated() const { return counter.deallocated(); }
 
     ByteCounter counter;
-};
 
+}; /* end struct CustomAllocator */
 
 static CustomAllocator<double> my_allocator;
 
