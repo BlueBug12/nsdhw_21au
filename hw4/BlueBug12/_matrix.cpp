@@ -143,13 +143,13 @@ struct CustomAllocator
 }; /* end struct CustomAllocator */
 
 template <class T, class U>
-bool operator==(const MyAllocator<T> & a, const MyAllocator<U> & b)
+bool operator==(const CustomAllocator<T> & a, const CustomAllocator<U> & b)
 {
     return a.counter.bytes() == b.counter.bytes();
 }
 
 template <class T, class U>
-bool operator!=(const MyAllocator<T> & a, const MyAllocator<U> & b)
+bool operator!=(const CustomAllocator<T> & a, const CustomAllocator<U> & b)
 {
     return !(a == b);
 } 
