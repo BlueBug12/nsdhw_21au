@@ -222,7 +222,7 @@ public:
         if (this == &other) { return *this; }
         m_nrow = std::exchange(other.m_nrow,0);
         m_ncol = std::exchange(other.m_ncol,0);
-        m_buffer(std::move(other.m_buffer));
+        m_buffer = std::move(other.m_buffer);
         return *this;
     }
     ~Matrix()
