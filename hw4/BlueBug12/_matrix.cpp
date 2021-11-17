@@ -210,29 +210,21 @@ public:
         }
         return *this;
     }*/
-/*
-    Matrix(Matrix && other)
-      : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
-    {
-        reset_buffer(0, 0);
-        std::swap(m_nrow, other.m_nrow);
-        std::swap(m_ncol, other.m_ncol);
-        std::swap(m_buffer, other.m_buffer);
-    }*/
     Matrix(Matrix && other)
         :m_buffer(std::move(other.m_buffer))
     {
         m_nrow = std::exchange(other.m_nrow,0);
         m_ncol = std::exchange(other.m_ncol,0);
     }
-    /*
-    Matrix & operator=(Matrix && other)
+
+    Matrix & operator=(Matrix && other) 
+        :m_buffer(std::move(other.m_buffer))
     {
         if (this == &other) { return *this; }
-        reset_buffer(0, 0);
-        std::swap(m_nrow, other.m_nrow);
+        m_nrow = std::exchange(other.m_nrow,0);
+        m_ncol = std::exchange(other.m_ncol,0);
         return *this;
-    }*/
+    }
     /*
     ~Matrix()
     {
