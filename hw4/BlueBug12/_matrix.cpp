@@ -230,7 +230,7 @@ public:
         reset_buffer(0, 0);
 
     }
-    //bool operator==(const Matrix &other);
+    bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[index(row, col)]; }
 
@@ -386,7 +386,6 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 
     return ret;
 }
-/*
 bool Matrix::operator==(const Matrix &other) {
     if (m_nrow != other.m_nrow || m_ncol != other.m_ncol) 
         return false;
@@ -396,7 +395,7 @@ bool Matrix::operator==(const Matrix &other) {
             if ((*this)(i, j) != other(i, j)) 
                 return false;
     return true;
-}*/
+}
 
 
 
