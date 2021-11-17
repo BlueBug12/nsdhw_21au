@@ -146,7 +146,10 @@ struct CustomAllocator
 static CustomAllocator<double>alloc;
 
 class Matrix {
-
+    friend Matrix multiply_naive(Matrix const &mat1, Matrix const &mat2);
+    friend Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t const tsize);
+    friend Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2);
+    friend bool operator==(Matrix const &mat1, Matrix const &mat2);
 public:
 
     Matrix(size_t nrow, size_t ncol)
@@ -261,8 +264,7 @@ private:
     void reset_buffer(size_t nrow, size_t ncol)
     {
         const size_t nelement = nrow * ncol;
-        m_buffer.reserve(nelement);
-        //m_buffer.resize(nelement,0);
+        m_buffer.resize(nelement,0);
         m_nrow = nrow;
         m_ncol = ncol;
     }
