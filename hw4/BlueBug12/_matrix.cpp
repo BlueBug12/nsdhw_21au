@@ -220,6 +220,7 @@ public:
         std::swap(m_ncol, other.m_ncol);
         std::swap(m_buffer, other.m_buffer);
     }*/
+    /*
     Matrix(Matrix && other){
         reset_buffer(0, 0);
         std::swap(m_nrow, other.m_nrow);
@@ -233,7 +234,7 @@ public:
         reset_buffer(0, 0);
         std::swap(m_nrow, other.m_nrow);
         return *this;
-    }
+    }*/
     /*
     ~Matrix()
     {
@@ -250,7 +251,7 @@ public:
     size_t size() const { return m_nrow * m_ncol; }
 
     //std::vector<double> buffer_vector() const { return std::vector<double>(m_buffer, m_buffer+size()); }
-    Matrix transpose() const;
+    //Matrix transpose() const;
     std::vector<double,CustomAllocator<double>>m_buffer;
 
 private:
