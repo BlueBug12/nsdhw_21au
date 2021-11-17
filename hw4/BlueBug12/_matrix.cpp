@@ -163,7 +163,7 @@ public:
     size_t ncol() const { return m_ncol; }
 
     //std::vector<double> buffer_vector() const { return std::vector<double>(m_buffer, m_buffer+size()); }
-
+    Matrix transpose() const;
     std::vector<double,CustomAllocator<double>>m_buffer;
 
 private:
@@ -226,7 +226,6 @@ Matrix Matrix::transpose() const
 
 Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
 
-    validate_multiplication(mat1, mat2);
     Matrix ret(mat1.nrow(), mat2.ncol());
     Matrix mat2_t = std::move(mat2.transpose());
 
