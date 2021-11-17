@@ -218,18 +218,18 @@ public:
     }
 
     Matrix & operator=(Matrix && other) 
-        :m_buffer(std::move(other.m_buffer))
     {
         if (this == &other) { return *this; }
         m_nrow = std::exchange(other.m_nrow,0);
         m_ncol = std::exchange(other.m_ncol,0);
+        m_buffer(std::move(other.m_buffer));
         return *this;
     }
-    /*
     ~Matrix()
     {
         reset_buffer(0, 0);
-    }*/
+
+    }
     //bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[index(row, col)]; }
