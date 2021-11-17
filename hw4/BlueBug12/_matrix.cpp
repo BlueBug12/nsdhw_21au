@@ -261,7 +261,8 @@ private:
     void reset_buffer(size_t nrow, size_t ncol)
     {
         const size_t nelement = nrow * ncol;
-        m_buffer.resize(nelement,0);
+        m_buffer.reserve(nelement);
+        //m_buffer.resize(nelement,0);
         m_nrow = nrow;
         m_ncol = ncol;
     }
