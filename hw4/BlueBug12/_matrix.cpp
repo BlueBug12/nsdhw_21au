@@ -234,10 +234,11 @@ public:
         std::swap(m_nrow, other.m_nrow);
         return *this;
     }
+    /*
     ~Matrix()
     {
         reset_buffer(0, 0);
-    }
+    }*/
     //bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[index(row, col)]; }
