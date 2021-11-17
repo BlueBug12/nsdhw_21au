@@ -278,9 +278,9 @@ Matrix multiply_tile(const Matrix &mat1, const Matrix &mat2, size_t tsize)
     }
     return ret;
 }
-std::size_t bytes() { return my_allocator.bytes(); }
-std::size_t allocated() { return my_allocator.allocated(); }
-std::size_t deallocated() { return my_allocator.deallocated(); }
+std::size_t bytes() { return my_allocator.counter.bytes(); }
+std::size_t allocated() { return my_allocator.counter.allocated(); }
+std::size_t deallocated() { return my_allocator.counter.deallocated(); }
 
 
 PYBIND11_MODULE(_matrix, m)
