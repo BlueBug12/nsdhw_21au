@@ -1,3 +1,4 @@
+#include <atomic>
 #include <iomanip>
 #include <vector>
 #include <stdexcept>
@@ -5,15 +6,13 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include "mkl.h"
-#include <atomic>
-
 
 struct ByteCounterImpl
 {
 
-    std::atomic_size_t allocated = {0};
-    std::atomic_size_t deallocated = {0};
-    std::atomic_size_t refcount = {0};
+    std::atomic_size_t allocated = 0;
+    std::atomic_size_t deallocated = 0;
+    std::atomic_size_t refcount = 0;
 
 }; /* end struct ByteCounterImpl */
 
@@ -106,11 +105,11 @@ struct CustomAllocator
     // "counter".
     CustomAllocator() = default;
 
-    template <class U>
-    constexpr CustomAllocator(const CustomAllocator<U> & other) noexcept
+   /* template <class U> constexpr
+    CustomAllocator(const CustomAllocator<U> & other) noexcept
     {
         counter = other.counter;
-    }
+    }*/
 
     T * allocate(std::size_t n)
     {
@@ -216,6 +215,8 @@ public:
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
     {
         reset_buffer(0, 0);
+        std::swap(m_nrow, other.m_nrow);
+        std::swap(m_ncol, other.m_ncol);
         std::swap(m_buffer, other.m_buffer);
     }
 
@@ -224,8 +225,6 @@ public:
         if (this == &other) { return *this; }
         reset_buffer(0, 0);
         std::swap(m_nrow, other.m_nrow);
-        std::swap(m_ncol, other.m_ncol);
-        std::swap(m_buffer, other.m_buffer);
         return *this;
     }
 
