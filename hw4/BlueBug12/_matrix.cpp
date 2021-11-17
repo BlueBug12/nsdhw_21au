@@ -1,8 +1,11 @@
+#include <atomic>
+#include <iomanip>
+#include <vector>
+#include <stdexcept>
+#include <functional>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <pybind11/operators.h>
-#include <vector>
-#include <mkl.h>
+#include "mkl.h"
 #include "CustomAllocator.hpp"
 
 static CustomAllocator<double> my_allocator;
