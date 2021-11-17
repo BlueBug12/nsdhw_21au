@@ -84,7 +84,6 @@ Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 
 Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2)
 {
-    mkl_set_num_threads(1);
 
     Matrix ret(mat1.nrow(), mat2.ncol());
 
