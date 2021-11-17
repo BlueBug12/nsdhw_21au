@@ -235,11 +235,10 @@ public:
         std::swap(m_nrow, other.m_nrow);
         return *this;
     }*/
-    /*
     ~Matrix()
     {
         reset_buffer(0, 0);
-    }*/
+    }
     //bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[index(row, col)]; }
@@ -296,7 +295,6 @@ bool operator== (Matrix const & mat1, Matrix const & mat2)
 
     return true;
 }
-/*
 Matrix Matrix::transpose() const
 {
     Matrix ret(nrow(), ncol());
@@ -310,8 +308,7 @@ Matrix Matrix::transpose() const
     }
 
     return ret;
-}*/
-/*
+}
 Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
 
     Matrix ret(mat1.nrow(), mat2.ncol());
@@ -339,7 +336,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
         }
     }
     return ret;
-}*/
+}
 
 
 
@@ -416,7 +413,7 @@ size_t deallocated() { return alloc.counter.deallocated(); }
 
 PYBIND11_MODULE(_matrix,m){
     m.def("multiply_naive", &multiply_naive);
-    //m.def("multiply_tile", &multiply_tile);
+    m.def("multiply_tile", &multiply_tile);
     m.def("multiply_mkl", &multiply_mkl);
     m.def("bytes", &bytes);
     m.def("allocated", &allocated);
