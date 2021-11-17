@@ -64,9 +64,9 @@ public:
         m_impl->deallocated += amount;
     }
 
-    std::size_t bytes() const { return m_impl->allocated - m_impl->deallocated; }
-    std::size_t allocated() const { return m_impl->allocated; }
-    std::size_t deallocated() const { return m_impl->deallocated; }
+    size_t bytes() const { return m_impl->allocated - m_impl->deallocated; }
+    size_t allocated() const { return m_impl->allocated; }
+    size_t deallocated() const { return m_impl->deallocated; }
     /* This is for debugging. */
     std::size_t refcount() const { return m_impl->refcount; }
 
@@ -142,6 +142,17 @@ struct CustomAllocator
 
 }; /* end struct CustomAllocator */
 
+template <class T, class U>
+bool operator==(const MyAllocator<T> & a, const MyAllocator<U> & b)
+{
+    return a.counter.bytes() == b.counter.bytes();
+}
+
+template <class T, class U>
+bool operator!=(const MyAllocator<T> & a, const MyAllocator<U> & b)
+{
+    return !(a == b);
+} 
 
 static CustomAllocator<double>alloc;
 
@@ -418,6 +429,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
     }
     return ret;
 }
+
 size_t bytes() { return alloc.counter.bytes(); }
 size_t allocated() { return alloc.counter.allocated(); }
 size_t deallocated() { return alloc.counter.deallocated(); }
