@@ -194,7 +194,7 @@ public:
             }
         }
     }*/
-
+    /*
     Matrix & operator=(Matrix const & other)
     {
         if (this == &other) { return *this; }
@@ -210,7 +210,7 @@ public:
             }
         }
         return *this;
-    }
+    }*/
 /*
     Matrix(Matrix && other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
