@@ -274,7 +274,7 @@ size_t deallocated() { return alloc.counter.deallocated(); }
 
 PYBIND11_MODULE(_matrix,m){
     m.def("multiply_naive", &multiply_naive);
-    m.def("multiply_tile", &multiply_tile);
+    //m.def("multiply_tile", &multiply_tile);
     m.def("multiply_mkl", &multiply_mkl);
     m.def("bytes", &bytes);
     m.def("allocated", &allocated);
