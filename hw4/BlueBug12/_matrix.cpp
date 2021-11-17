@@ -161,7 +161,6 @@ public:
         (*this) = vec;
     }
 
-    /*
     Matrix & operator=(std::vector<double> const & vec)
     {
         if (size() != vec.size())
@@ -180,7 +179,7 @@ public:
         }
 
         return *this;
-    }*/
+    }
     /*
     Matrix(Matrix const & other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
@@ -423,7 +422,7 @@ PYBIND11_MODULE(_matrix,m){
     m.def("deallocated", &deallocated);
     pybind11::class_<Matrix>(m,"Matrix")
         .def(pybind11::init<const size_t, const size_t>())
-        //.def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
+        .def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
         .def("__eq__", &operator==)
         .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
