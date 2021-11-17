@@ -181,7 +181,7 @@ public:
 
         return *this;
     }*/
-
+    /*
     Matrix(Matrix const & other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
     {
@@ -193,7 +193,7 @@ public:
                 (*this)(i,j) = other(i,j);
             }
         }
-    }
+    }*/
 
     Matrix & operator=(Matrix const & other)
     {
