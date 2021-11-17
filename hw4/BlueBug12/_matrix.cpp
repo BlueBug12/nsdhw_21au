@@ -153,7 +153,7 @@ public:
     {
         reset_buffer(nrow, ncol);
     }
-    
+   /* 
     Matrix(size_t nrow, size_t ncol, std::vector<double> const & vec)
       : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
     {
@@ -180,7 +180,7 @@ public:
         }
 
         return *this;
-    }
+    }*/
 
     Matrix(Matrix const & other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
