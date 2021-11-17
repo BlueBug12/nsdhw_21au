@@ -211,7 +211,7 @@ public:
         }
         return *this;
     }
-
+/*
     Matrix(Matrix && other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
     {
@@ -233,7 +233,7 @@ public:
     {
         reset_buffer(0, 0);
     }
-
+*/
     bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[index(row, col)]; }
