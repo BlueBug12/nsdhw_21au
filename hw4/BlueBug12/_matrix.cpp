@@ -180,7 +180,6 @@ public:
 
         return *this;
     }
-    /*
     Matrix(Matrix const & other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
     {
@@ -192,8 +191,7 @@ public:
                 (*this)(i,j) = other(i,j);
             }
         }
-    }*/
-    /*
+    }
     Matrix & operator=(Matrix const & other)
     {
         if (this == &other) { return *this; }
@@ -209,27 +207,13 @@ public:
             }
         }
         return *this;
-    }*/
+    }
     Matrix(Matrix && other)
         :m_buffer(std::move(other.m_buffer))
     {
         m_nrow = std::exchange(other.m_nrow,0);
         m_ncol = std::exchange(other.m_ncol,0);
     }
-    /*
-    Matrix & operator=(Matrix && other) 
-    {
-        if (this == &other) { return *this; }
-        m_nrow = std::exchange(other.m_nrow,0);
-        m_ncol = std::exchange(other.m_ncol,0);
-        m_buffer = std::move(other.m_buffer);
-        return *this;
-    }
-    ~Matrix()
-    {
-        reset_buffer(0, 0);
-
-    }*/
     bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[index(row, col)]; }
