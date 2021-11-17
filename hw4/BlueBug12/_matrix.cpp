@@ -153,6 +153,27 @@ public:
     {
         reset_buffer(nrow, ncol);
     }
+    
+    Matrix(size_t nrow, size_t ncol, std::vector<double> const & vec)
+      : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
+    {
+        reset_buffer(nrow, ncol);
+        (*this) = vec;
+    }
+
+
+    Matrix & operator=(Matrix && other)
+    {
+        if (this == &other) { return *this; }
+        reset_buffer(0, 0);
+        std::swap(m_nrow, other.m_nrow);
+        return *this;
+    }
+
+    ~Matrix()
+    {
+        reset_buffer(0, 0);
+    }
 
     bool operator==(const Matrix &other);
     double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
@@ -309,6 +330,16 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
     return ret;
 }
 
+bool Matrix::operator==(const Matrix &other) {
+    if (m_nrow != other.m_nrow || m_ncol != other.m_ncol) 
+        return false;
+
+    for (size_t i = 0; i < m_nrow; ++i) 
+        for (size_t j = 0; j < m_ncol; ++j) 
+            if ((*this)(i, j) != other(i, j)) 
+                return false;
+    return true;
+}
 
 
 
@@ -325,8 +356,8 @@ PYBIND11_MODULE(_matrix,m){
     m.def("deallocated", &deallocated);
     pybind11::class_<Matrix>(m,"Matrix")
         .def(pybind11::init<const size_t, const size_t>())
-        //.def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
-        //.def("__eq__", &Matrix::operator==)
+        .def(pybind11::init<const size_t, const size_t, std::vector<double> const & >())
+        .def("__eq__", &Matrix::operator==)
         .def("__eq__", &operator==)
         .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
