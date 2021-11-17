@@ -242,6 +242,8 @@ public:
     size_t nrow() const { return m_nrow; }
     size_t ncol() const { return m_ncol; }
 
+    size_t size() const { return m_nrow * m_ncol; }
+
     //std::vector<double> buffer_vector() const { return std::vector<double>(m_buffer, m_buffer+size()); }
     Matrix transpose() const;
     std::vector<double,CustomAllocator<double>>m_buffer;
