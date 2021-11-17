@@ -142,6 +142,7 @@ struct CustomAllocator
 
 }; /* end struct CustomAllocator */
 
+
 static CustomAllocator<double>alloc;
 
 class Matrix {
@@ -417,7 +418,6 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize){
     }
     return ret;
 }
-
 size_t bytes() { return alloc.counter.bytes(); }
 size_t allocated() { return alloc.counter.allocated(); }
 size_t deallocated() { return alloc.counter.deallocated(); }
