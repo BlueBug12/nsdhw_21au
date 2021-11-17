@@ -162,6 +162,65 @@ public:
     }
 
 
+    Matrix & operator=(std::vector<double> const & vec)
+    {
+        if (size() != vec.size())
+        {
+            throw std::out_of_range("number of elements mismatch");
+        }
+
+        size_t k = 0;
+        for (size_t i=0; i<m_nrow; ++i)
+        {
+            for (size_t j=0; j<m_ncol; ++j)
+            {
+                (*this)(i,j) = vec[k];
+                ++k;
+            }
+        }
+
+        return *this;
+    }
+
+    Matrix(Matrix const & other)
+      : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
+    {
+        reset_buffer(other.m_nrow, other.m_ncol);
+        for (size_t i=0; i<m_nrow; ++i)
+        {
+            for (size_t j=0; j<m_ncol; ++j)
+            {
+                (*this)(i,j) = other(i,j);
+            }
+        }
+    }
+
+    Matrix & operator=(Matrix const & other)
+    {
+        if (this == &other) { return *this; }
+        if (m_nrow != other.m_nrow || m_ncol != other.m_ncol)
+        {
+            reset_buffer(other.m_nrow, other.m_ncol);
+        }
+        for (size_t i=0; i<m_nrow; ++i)
+        {
+            for (size_t j=0; j<m_ncol; ++j)
+            {
+                (*this)(i,j) = other(i,j);
+            }
+        }
+        return *this;
+    }
+
+    Matrix(Matrix && other)
+      : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
+    {
+        reset_buffer(0, 0);
+        std::swap(m_nrow, other.m_nrow);
+        std::swap(m_ncol, other.m_ncol);
+        std::swap(m_buffer, other.m_buffer);
+    }
+
     Matrix & operator=(Matrix && other)
     {
         if (this == &other) { return *this; }
