@@ -220,10 +220,9 @@ public:
         std::swap(m_buffer, other.m_buffer);
     }*/
     Matrix(Matrix && other){
-        reset_buffer(0, 0);
-        std::swap(m_nrow, other.m_nrow);
-        std::swap(m_ncol, other.m_ncol);
-        std::swap(m_buffer, other.m_buffer);
+        m_nrow = std::exchange(other.m_nrow,0);
+        m_ncol = std::exchange(other.m_ncol,0);
+        m_buffer = std::move(other.m_buffer);
     }
     /*
     Matrix & operator=(Matrix && other)
