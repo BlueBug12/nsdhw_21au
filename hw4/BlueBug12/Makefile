@@ -2,7 +2,8 @@ CXX := g++
 CXXFLAGS := -O3 -Wall -shared -std=c++17 -fPIC
 TARGET = _matrix.*.so
 
-INCLUDE_DIRS = /usr/include/mkl
+#INCLUDE_DIRS = /usr/include/mkl
+INCLUDE_DIRS = /opt/intel/mkl/include
 MKL_LIB=/usr/lib/x86_64-linux-gnu -lblas
 
 all: $(TARGET)
@@ -12,6 +13,6 @@ $(TARGET): _matrix.cpp
 
 
 .PHONY: clean
-	clean:
-		rm -rf *.o *.so __pycache__
+clean:
+	rm -rf *.o *.so __pycache__
 
