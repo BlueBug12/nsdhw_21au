@@ -117,11 +117,11 @@ public:
 
 public:
     pybind11::array_t<double> array(){
-        return py::array_t<double>(
+        return pybind11::array_t<double>(
           {nrow(), ncol()}, // shape
           {sizeof(double) * ncol(), sizeof(double)}, // C-style contiguous strides for ncol doubles
           m_buffer, // the data pointer
-          py::cast(this)); // numpy array references this parent
+          pybind11::cast(this)); // numpy array references this parent
 /*
         auto result = pybind11::array_t<double>(size());
         pybind11::buffer_info buf = result.request();
