@@ -126,7 +126,7 @@ public:
                     std::vector<size_t>{m_ncol,m_nrow},
                     std::vector<size_t> {m_nrow*sizeof(double),sizeof(double)}
                 )
-            )
+            );
     }
     size_t index(size_t row, size_t col) const
     {
