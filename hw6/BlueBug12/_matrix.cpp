@@ -308,7 +308,7 @@ PYBIND11_MODULE(_matrix,m){
         .def("__eq__", &Matrix::operator==)
         .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
-        .def_property("array",&Matrix::array)
+        .def_property("array",&Matrix::array,nullptr)
         .def_property_readonly("nrow",&Matrix::nrow)
         .def_property_readonly("ncol",&Matrix::nrow);
         
