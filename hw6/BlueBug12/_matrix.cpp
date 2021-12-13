@@ -115,12 +115,12 @@ public:
     Matrix transpose() const;
 
 public:
-    py::array_t<double> array(){
-        return py::array_t<double>(
-            py::buffer_info(
+    pybind11::array_t<double> array(){
+        return pybind11::array_t<double>(
+            pybind11::buffer_info(
                     m_buffer,
                     sizeof(double),
-                    py::format_descriptor<double>::format(),
+                    pybind11::format_descriptor<double>::format(),
                     2,//ndim
                     std::vector<size_t>{m_ncol,m_nrow},
                     std::vector<size_t> {m_nrow*sizeof(double),sizeof(double)}
