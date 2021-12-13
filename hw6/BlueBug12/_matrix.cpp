@@ -123,8 +123,8 @@ public:
                     sizeof(double),
                     pybind11::format_descriptor<double>::format(),
                     2,//ndim
-                    std::vector<size_t>{m_ncol,m_nrow},
-                    std::vector<size_t> {m_nrow*sizeof(double),sizeof(double)}
+                    {m_ncol,m_nrow},
+                    {m_ncol*sizeof(double),sizeof(double)}
                 )
             );
     }
@@ -308,7 +308,7 @@ PYBIND11_MODULE(_matrix,m){
         .def("__eq__", &Matrix::operator==)
         .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
         .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
-        .def("array",&Matrix::array)
+        .def_property("array",&Matrix::array)
         .def_property_readonly("nrow",&Matrix::nrow)
         .def_property_readonly("ncol",&Matrix::nrow);
         
