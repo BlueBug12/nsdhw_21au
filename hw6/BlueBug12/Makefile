@@ -1,6 +1,7 @@
 CXX := g++
 CXXFLAGS := -O3 -Wall -shared -std=c++11 -fPIC
 TARGET = _matrix.*.so
+NUMPY_PATH := $(shell python3 -c "import numpy; print(numpy.get_include())")
 
 INCLUDE_DIRS = /usr/include/mkl
 MKL_LIB=/usr/lib/x86_64-linux-gnu -lblas
@@ -8,7 +9,7 @@ MKL_LIB=/usr/lib/x86_64-linux-gnu -lblas
 all: $(TARGET)
 
 $(TARGET): _matrix.cpp
-	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` $< -o _matrix`python3-config --extension-suffix` `python3-config --includes` -I${INCLUDE_DIRS} -L${MKL_LIB} -lpthread
+	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` $< -o _matrix`python3-config --extension-suffix` `python3-config --includes` -I${INCLUDE_DIRS} -I$(NUMPY_PATH) -L${MKL_LIB} -lpthread
 
 test: all
 	python3 -m pytest test_matrix.py
