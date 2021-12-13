@@ -117,6 +117,17 @@ public:
 
 public:
     pybind11::array_t<double> array(){
+
+        auto result = pybind11::array_t<double>(size());
+        pybind11::buffer_info buf = result.request();
+        double *ptr = static_cast<double *>(buf.ptr);
+        for(int i=0;i<nrow();++i){
+            for(int j=0;j<ncol();++j){
+                ptr[i*m_ncol+j] = m_buffer[index(i,j)];           
+            }
+        }
+        return result;
+        /*
         return pybind11::array_t<double>(
             pybind11::buffer_info(
                     m_buffer,
@@ -126,7 +137,7 @@ public:
                     {m_ncol,m_nrow},
                     {m_ncol*sizeof(double),sizeof(double)}
                 )
-            );
+            );*/
     }
     size_t index(size_t row, size_t col) const
     {
